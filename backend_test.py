@@ -209,7 +209,7 @@ def test_service_catalog():
             if isinstance(data, list) and len(data) >= 6:
                 result.log_success("Get services list")
                 # Store service IDs for later use
-                service_ids.extend([service["id"] for service in data[:6]])
+                service_ids.extend([service["_id"] for service in data[:6]])
             else:
                 result.log_failure("Get services list", f"Expected list with 6+ services, got {len(data) if isinstance(data, list) else 'not a list'}")
         else:

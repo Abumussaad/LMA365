@@ -194,7 +194,7 @@ def test_service_catalog():
                 response = make_request("POST", "/services", service, token=tokens["admin"])
                 if response.status_code in [200, 201]:
                     data = response.json()
-                    service_ids.append(data["id"])
+                    service_ids.append(data["_id"])
                     result.log_success(f"Create service: {service['name']}")
                 else:
                     result.log_failure(f"Create service: {service['name']}", f"Status: {response.status_code}")

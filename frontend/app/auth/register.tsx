@@ -36,7 +36,23 @@ export default function Register() {
     setLoading(true);
     try {
       await register(email, password, fullName, role, phone);
-      router.replace('/(tabs)');
+      // Navigate based on role
+      switch (role) {
+        case 'customer':
+          router.replace('/(tabs)/customer');
+          break;
+        case 'dispatcher':
+          router.replace('/(tabs)/dispatcher');
+          break;
+        case 'technician':
+          router.replace('/(tabs)/technician');
+          break;
+        case 'admin':
+          router.replace('/(tabs)/admin');
+          break;
+        default:
+          router.replace('/auth/login');
+      }
     } catch (error: any) {
       Alert.alert('Registration Failed', error.message);
     } finally {

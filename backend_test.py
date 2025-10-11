@@ -346,7 +346,7 @@ def test_service_requests():
             response = make_request("POST", "/requests", request_data, token=tokens["customer"])
             if response.status_code in [200, 201]:
                 data = response.json()
-                request_id = data["id"]
+                request_id = data["_id"]
                 if data.get("discount_amount", 0) > 0:
                     result.log_success("Create service request with coupon")
                 else:

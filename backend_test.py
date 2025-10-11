@@ -95,7 +95,7 @@ def test_user_registration():
                 data = response.json()
                 if "access_token" in data and "user" in data:
                     tokens[role] = data["access_token"]
-                    user_ids[role] = data["user"]["id"]
+                    user_ids[role] = data["user"]["_id"]
                     result.log_success(f"Register {role}")
                 else:
                     result.log_failure(f"Register {role}", "Missing token or user in response")

@@ -266,6 +266,14 @@ def test_promotions():
                 "min_spend": 0.0
             },
             {
+                "code": "TESTDISCOUNT",
+                "discount_type": "PERCENT",
+                "discount_value": 15.0,
+                "effective_start": datetime.utcnow().isoformat(),
+                "effective_end": (datetime.utcnow() + timedelta(days=30)).isoformat(),
+                "min_spend": 0.0
+            },
+            {
                 "code": "SAVE50",
                 "discount_type": "FIXED_AMOUNT",
                 "discount_value": 50.0,

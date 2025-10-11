@@ -586,7 +586,7 @@ async def complete_job(
             "$set": {
                 "status": JobStatus.COMPLETION_PENDING,
                 "completion_report": report.dict(),
-                "parts_used": report.parts_used,
+                "parts_used": [part.dict() for part in report.parts_used],
                 "completed_at": datetime.utcnow()
             }
         }

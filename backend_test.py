@@ -243,7 +243,7 @@ def test_technician_profile():
             response = make_request("POST", "/technicians/profile", profile_data, token=tokens["technician"])
             if response.status_code in [200, 201]:
                 data = response.json()
-                technician_profile_id = data["id"]
+                technician_profile_id = data["_id"]
                 result.log_success("Create technician profile")
             else:
                 result.log_failure("Create technician profile", f"Status: {response.status_code}, Response: {response.text}")

@@ -433,8 +433,7 @@ def test_technician_assignment():
         
         # Assign technician to request
         try:
-            assign_data = {"technician_id": user_ids["technician"]}
-            response = make_request("POST", f"/requests/{request_id}/assign", assign_data, token=tokens["dispatcher"])
+            response = make_request("POST", f"/requests/{request_id}/assign?technician_id={user_ids['technician']}", token=tokens["dispatcher"])
             if response.status_code == 200:
                 data = response.json()
                 if "job_id" in data:

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useAuthStore } from '../store/authStore';
@@ -6,9 +6,12 @@ import { useAuthStore } from '../store/authStore';
 export default function Index() {
   const router = useRouter();
   const { isAuthenticated, isLoading, user } = useAuthStore();
+  const [hasRedirected, setHasRedirected] = useState(false);
 
   useEffect(() => {
-    if (!isLoading) {
+    if (!isLoading && !hasRedirected) {
+      setHasRedirected(true);
+      
       if (isAuthenticated && user) {
         // Navigate to role-specific home screen
         switch (user.role) {
@@ -31,7 +34,7 @@ export default function Index() {
         router.replace('/auth/login');
       }
     }
-  }, [isAuthenticated, isLoading, user]);
+  }, [isAuthenticated, isLoading, user, hasRedirected]);
 
   return (
     <View style={styles.container}>

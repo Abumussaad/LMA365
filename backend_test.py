@@ -533,10 +533,9 @@ def test_customer_closeout():
     if "customer" in tokens and job_id:
         try:
             closeout_data = {
-                "rating": 5,
                 "review": "Excellent service! Very professional and quick."
             }
-            response = make_request("POST", f"/jobs/{job_id}/close", closeout_data, token=tokens["customer"])
+            response = make_request("POST", f"/jobs/{job_id}/close?rating=5", closeout_data, token=tokens["customer"])
             if response.status_code == 200:
                 result.log_success("Customer close job with rating")
             else:

@@ -337,7 +337,8 @@ def test_service_requests():
                 "scheduled_time": (datetime.utcnow() + timedelta(hours=2)).isoformat(),
                 "services": [
                     {"service_id": service_ids[0], "quantity": 1},
-                    {"service_id": service_ids[1], "quantity": 1}
+                    {"service_id": service_ids[1], "quantity": 1},
+                    {"service_id": service_ids[2], "quantity": 1}
                 ],
                 "notes": "Please call before arrival",
                 "coupon_code": "WELCOME20"

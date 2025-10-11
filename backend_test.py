@@ -108,7 +108,7 @@ def test_user_registration():
                 if login_response.status_code == 200:
                     data = login_response.json()
                     tokens[role] = data["access_token"]
-                    user_ids[role] = data["user"]["id"]
+                    user_ids[role] = data["user"]["_id"]
                     result.log_success(f"Register {role} (existing user)")
                 else:
                     result.log_failure(f"Register {role}", f"Login failed: {login_response.status_code}")

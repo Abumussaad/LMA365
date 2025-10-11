@@ -31,7 +31,26 @@ export default function Login() {
     setLoading(true);
     try {
       await login(email, password);
-      router.replace('/(tabs)');
+      // Get the updated user after login
+      const user = useAuthStore.getState().user;
+      if (user) {
+        switch (user.role) {
+          case 'customer':
+            router.replace('/(tabs)/customer');
+            break;
+          case 'dispatcher':
+            router.replace('/(tabs)/dispatcher');
+            break;
+          case 'technician':
+            router.replace('/(tabs)/technician');
+            break;
+          case 'admin':
+            router.replace('/(tabs)/admin');
+            break;
+          default:
+            router.replace('/auth/login');
+        }
+      }
     } catch (error: any) {
       Alert.alert('Login Failed', error.message);
     } finally {

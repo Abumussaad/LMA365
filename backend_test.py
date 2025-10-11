@@ -341,7 +341,7 @@ def test_service_requests():
                     {"service_id": service_ids[2], "quantity": 1}
                 ],
                 "notes": "Please call before arrival",
-                "coupon_code": "WELCOME20"
+                "coupon_code": "TESTDISCOUNT"
             }
             
             response = make_request("POST", "/requests", request_data, token=tokens["customer"])

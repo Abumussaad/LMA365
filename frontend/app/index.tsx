@@ -5,17 +5,33 @@ import { useAuthStore } from '../store/authStore';
 
 export default function Index() {
   const router = useRouter();
-  const { isAuthenticated, isLoading } = useAuthStore();
+  const { isAuthenticated, isLoading, user } = useAuthStore();
 
   useEffect(() => {
     if (!isLoading) {
-      if (isAuthenticated) {
-        router.replace('/(tabs)');
+      if (isAuthenticated && user) {
+        // Navigate to role-specific home screen
+        switch (user.role) {
+          case 'customer':
+            router.replace('/(tabs)/customer');
+            break;
+          case 'dispatcher':
+            router.replace('/(tabs)/dispatcher');
+            break;
+          case 'technician':
+            router.replace('/(tabs)/technician');
+            break;
+          case 'admin':
+            router.replace('/(tabs)/admin');
+            break;
+          default:
+            router.replace('/auth/login');
+        }
       } else {
         router.replace('/auth/login');
       }
     }
-  }, [isAuthenticated, isLoading]);
+  }, [isAuthenticated, isLoading, user]);
 
   return (
     <View style={styles.container}>

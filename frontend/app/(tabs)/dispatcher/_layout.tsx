@@ -1,33 +1,16 @@
-import React from 'react';
-import { Tabs } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Stack } from 'expo-router';
 
 export default function DispatcherLayout() {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: '#007AFF',
-        headerShown: false,
-      }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Dashboard',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="grid" size={size} color={color} />
-          ),
-        }}
+    <Stack screenOptions={{ headerShown: true }}>
+      <Stack.Screen 
+        name="index" 
+        options={{ title: 'Dispatch Dashboard' }}
       />
-      <Tabs.Screen
-        name="technicians"
-        options={{
-          title: 'Technicians',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="people" size={size} color={color} />
-          ),
-        }}
+      <Stack.Screen 
+        name="technicians" 
+        options={{ title: 'Technicians' }}
       />
-    </Tabs>
+    </Stack>
   );
 }

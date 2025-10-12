@@ -1,33 +1,16 @@
-import React from 'react';
-import { Tabs } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
+import { Stack } from 'expo-router';
 
 export default function TechnicianLayout() {
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: '#007AFF',
-        headerShown: false,
-      }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Jobs',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="briefcase" size={size} color={color} />
-          ),
-        }}
+    <Stack screenOptions={{ headerShown: true }}>
+      <Stack.Screen 
+        name="index" 
+        options={{ title: 'My Jobs' }}
       />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: 'Profile',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person" size={size} color={color} />
-          ),
-        }}
+      <Stack.Screen 
+        name="profile" 
+        options={{ title: 'Profile' }}
       />
-    </Tabs>
+    </Stack>
   );
 }

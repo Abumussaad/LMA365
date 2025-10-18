@@ -741,6 +741,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Serve React app static files
+web_app_path = Path(__file__).parent.parent / "web-app" / "dist"
+if web_app_path.exists():
+    app.mount("/assets", StaticFiles(directory=str(web_app_path / "assets")), name="assets")
+    
+    @app.get("/{full_path:path}")
+    async def serve_react_app(full_path: str):
+        # Don't serve index.html for API routes
+        if full_path.startswith("api/"):
+            raise HTTPException(status_code=404, detail="Not found")
+        
+        # Serve index.html for all other routes (SPA routing)
+        index_file = web_app_path / "index.html"
+        if index_file.exists():
+            return FileResponse(index_file)
+        raise HTTPException(status_code=404, detail="Not found")
+
 
 @app.on_event("shutdown")
 async def shutdown_db_client():

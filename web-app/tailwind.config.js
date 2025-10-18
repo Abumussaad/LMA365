@@ -7,7 +7,11 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#007AFF',
+        primary: {
+          DEFAULT: '#007AFF',
+          blue: '#007AFF',
+          orange: '#FF9500',
+        },
       },
     },
   },

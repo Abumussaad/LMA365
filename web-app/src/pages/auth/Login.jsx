@@ -120,7 +120,7 @@ export default function Login() {
                 setEmail('customer@test.com');
                 setPassword('password123');
               }}
-              className="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded"
+              className="text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-2 rounded font-medium"
             >
               Customer
             </button>
@@ -129,7 +129,7 @@ export default function Login() {
                 setEmail('dispatcher@test.com');
                 setPassword('password123');
               }}
-              className="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded"
+              className="text-xs bg-orange-100 hover:bg-orange-200 text-orange-700 px-3 py-2 rounded font-medium"
             >
               Dispatcher
             </button>
@@ -138,7 +138,7 @@ export default function Login() {
                 setEmail('technician@test.com');
                 setPassword('password123');
               }}
-              className="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded"
+              className="text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-2 rounded font-medium"
             >
               Technician
             </button>
@@ -147,7 +147,7 @@ export default function Login() {
                 setEmail('admin@test.com');
                 setPassword('password123');
               }}
-              className="text-xs bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded"
+              className="text-xs bg-orange-100 hover:bg-orange-200 text-orange-700 px-3 py-2 rounded font-medium"
             >
               Admin
             </button>

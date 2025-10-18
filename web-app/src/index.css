@@ -24,7 +24,11 @@ body {
 }
 
 .btn-secondary {
-  @apply bg-gray-200 text-gray-800 px-4 py-3 rounded-lg font-medium hover:bg-gray-300 transition-colors w-full text-center;
+  @apply bg-orange-500 text-white px-4 py-3 rounded-lg font-medium hover:bg-orange-600 transition-colors w-full text-center;
+}
+
+.btn-orange {
+  @apply bg-orange-500 text-white px-4 py-3 rounded-lg font-medium hover:bg-orange-600 transition-colors w-full text-center;
 }
 
 .input-field {

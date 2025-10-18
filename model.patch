@@ -1,167 +1,276 @@
-diff --git a/backend/server.py b/backend/server.py
-index 08156e2..03bf969 100644
---- a/backend/server.py
-+++ b/backend/server.py
-@@ -586,7 +586,7 @@ async def complete_job(
-             "$set": {
-                 "status": JobStatus.COMPLETION_PENDING,
-                 "completion_report": report.dict(),
--                "parts_used": report.parts_used,
-+                "parts_used": [part.dict() for part in report.parts_used],
-                 "completed_at": datetime.utcnow()
-             }
-         }
-diff --git a/test_result.md b/test_result.md
-index 187cba4..fedb8c9 100644
---- a/test_result.md
-+++ b/test_result.md
-@@ -100,4 +100,146 @@
+diff --git a/model.patch b/model.patch
+index c12ef54..e69de29 100644
+--- a/model.patch
++++ b/model.patch
+@@ -1,167 +0,0 @@
+-diff --git a/backend/server.py b/backend/server.py
+-index 08156e2..03bf969 100644
+---- a/backend/server.py
+-+++ b/backend/server.py
+-@@ -586,7 +586,7 @@ async def complete_job(
+-             "$set": {
+-                 "status": JobStatus.COMPLETION_PENDING,
+-                 "completion_report": report.dict(),
+--                "parts_used": report.parts_used,
+-+                "parts_used": [part.dict() for part in report.parts_used],
+-                 "completed_at": datetime.utcnow()
+-             }
+-         }
+-diff --git a/test_result.md b/test_result.md
+-index 187cba4..fedb8c9 100644
+---- a/test_result.md
+-+++ b/test_result.md
+-@@ -100,4 +100,146 @@
+- 
+- #====================================================================================================
+- # Testing Data - Main Agent and testing sub agent both should log testing data below this section
+--#====================================================================================================
+-\ No newline at end of file
+-+#====================================================================================================
+-+
+-+user_problem_statement: "Comprehensive backend API testing for Vehicle Maintenance App covering authentication, service catalog, request flow, technician assignment, job management, promotions, and analytics"
+-+
+-+backend:
+-+  - task: "User Authentication & Registration"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "high"
+-+    needs_retesting: false
+-+    status_history:
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "All user roles (customer, dispatcher, technician, admin) can register and login successfully. JWT token generation and validation working correctly."
+-+
+-+  - task: "Role-Based Access Control"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "high"
+-+    needs_retesting: false
+-+    status_history:
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "RBAC properly enforced. Customer users blocked from admin routes (403 Forbidden). Role validation working correctly."
+-+
+-+  - task: "Service Catalog Management"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "high"
+-+    needs_retesting: false
+-+    status_history:
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "Service CRUD operations working. Admin can create services, public can view services list (6+ services available). Non-admin users properly blocked from creating services."
+-+
+-+  - task: "Technician Profile Management"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "medium"
+-+    needs_retesting: false
+-+    status_history:
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "Technician profile creation working correctly. Profile includes vehicle number, skills, and rating system."
+-+
+-+  - task: "Promotions & Coupon System"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "medium"
+-+    needs_retesting: false
+-+    status_history:
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "Promotion CRUD operations working. Admin can create/list promotions. Coupon validation endpoint working. Multiple coupon types supported (PERCENT, FIXED_AMOUNT)."
+-+
+-+  - task: "Service Request Creation & Management"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 1
+-+    priority: "high"
+-+    needs_retesting: false
+-+    status_history:
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "Service request creation working with and without coupons. Discount calculation working correctly when minimum spend requirements are met. Customer can view own requests, dispatcher can view all requests. Fixed backend issue with PartUsed object serialization."
+-+
+-+  - task: "Technician Assignment by Dispatcher"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 1
+-+    priority: "high"
+-+    needs_retesting: false
+-+    status_history:
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "Dispatcher can view available technicians and assign them to service requests. Job creation working correctly. Fixed API parameter issue (technician_id as query parameter)."
+-+
+-+  - task: "Technician Job Workflow"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 1
+-+    priority: "high"
+-+    needs_retesting: false
+-+    status_history:
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "Complete technician workflow working: view jobs, accept job (status -> EN_ROUTE), upload BEFORE photos (status -> ON_SITE), complete job with parts and labor (status -> COMPLETION_PENDING). Fixed backend serialization issue for PartUsed objects."
+-+
+-+  - task: "Customer Job Closeout & Rating"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 1
+-+    priority: "high"
+-+    needs_retesting: false
+-+    status_history:
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "Customer can close jobs and provide ratings/reviews. Technician rating average and count properly updated. Job status changes to CLOSED. Fixed API parameter issue (rating as query parameter)."
+-+
+-+  - task: "Analytics Dashboard"
+-+    implemented: true
+-+    working: true
+-+    file: "/app/backend/server.py"
+-+    stuck_count: 0
+-+    priority: "medium"
+-+    needs_retesting: false
+-+    status_history:
+-+      - working: true
+-+        agent: "testing"
+-+        comment: "Analytics summary endpoint working for admin users. Returns total_requests, completed_jobs, active_technicians, and total_revenue metrics."
+-+
+-+frontend:
+-+  # No frontend testing performed as per instructions
+-+
+-+metadata:
+-+  created_by: "testing_agent"
+-+  version: "1.0"
+-+  test_sequence: 1
+-+  run_ui: false
+-+
+-+test_plan:
+-+  current_focus: []
+-+  stuck_tasks: []
+-+  test_all: true
+-+  test_priority: "high_first"
+-+
+-+agent_communication:
+-+  - agent: "testing"
+-+    message: "Comprehensive backend testing completed successfully. All 40 test cases passed covering authentication, RBAC, service catalog, technician workflows, promotions, and analytics. Fixed 3 backend issues during testing: 1) API parameter formats for technician assignment and job closeout, 2) PartUsed object serialization in job completion, 3) Coupon discount calculation with minimum spend requirements. All core backend functionality is working correctly."
+-\ No newline at end of file
+diff --git a/web-app/src/index.css b/web-app/src/index.css
+index 08a3ac9..f8b603b 100644
+--- a/web-app/src/index.css
++++ b/web-app/src/index.css
+@@ -1,68 +1,48 @@
+-:root {
+-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+-  line-height: 1.5;
+-  font-weight: 400;
++@tailwind base;
++@tailwind components;
++@tailwind utilities;
  
- #====================================================================================================
- # Testing Data - Main Agent and testing sub agent both should log testing data below this section
--#====================================================================================================
-\ No newline at end of file
-+#====================================================================================================
+-  color-scheme: light dark;
+-  color: rgba(255, 255, 255, 0.87);
+-  background-color: #242424;
++* {
++  margin: 0;
++  padding: 0;
++  box-sizing: border-box;
++}
+ 
+-  font-synthesis: none;
+-  text-rendering: optimizeLegibility;
++body {
++  margin: 0;
++  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
++    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
++    sans-serif;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
++  background-color: #f9fafb;
+ }
+ 
+-a {
+-  font-weight: 500;
+-  color: #646cff;
+-  text-decoration: inherit;
+-}
+-a:hover {
+-  color: #535bf2;
++/* Mobile-first responsive utilities */
++.btn-primary {
++  @apply bg-blue-600 text-white px-4 py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors w-full text-center;
+ }
+ 
+-body {
+-  margin: 0;
+-  display: flex;
+-  place-items: center;
+-  min-width: 320px;
+-  min-height: 100vh;
++.btn-secondary {
++  @apply bg-gray-200 text-gray-800 px-4 py-3 rounded-lg font-medium hover:bg-gray-300 transition-colors w-full text-center;
+ }
+ 
+-h1 {
+-  font-size: 3.2em;
+-  line-height: 1.1;
++.input-field {
++  @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none;
+ }
+ 
+-button {
+-  border-radius: 8px;
+-  border: 1px solid transparent;
+-  padding: 0.6em 1.2em;
+-  font-size: 1em;
+-  font-weight: 500;
+-  font-family: inherit;
+-  background-color: #1a1a1a;
+-  cursor: pointer;
+-  transition: border-color 0.25s;
+-}
+-button:hover {
+-  border-color: #646cff;
++.card {
++  @apply bg-white rounded-lg shadow-sm p-4 mb-4;
+ }
+-button:focus,
+-button:focus-visible {
+-  outline: 4px auto -webkit-focus-ring-color;
 +
-+user_problem_statement: "Comprehensive backend API testing for Vehicle Maintenance App covering authentication, service catalog, request flow, technician assignment, job management, promotions, and analytics"
-+
-+backend:
-+  - task: "User Authentication & Registration"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "high"
-+    needs_retesting: false
-+    status_history:
-+      - working: true
-+        agent: "testing"
-+        comment: "All user roles (customer, dispatcher, technician, admin) can register and login successfully. JWT token generation and validation working correctly."
-+
-+  - task: "Role-Based Access Control"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "high"
-+    needs_retesting: false
-+    status_history:
-+      - working: true
-+        agent: "testing"
-+        comment: "RBAC properly enforced. Customer users blocked from admin routes (403 Forbidden). Role validation working correctly."
-+
-+  - task: "Service Catalog Management"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "high"
-+    needs_retesting: false
-+    status_history:
-+      - working: true
-+        agent: "testing"
-+        comment: "Service CRUD operations working. Admin can create services, public can view services list (6+ services available). Non-admin users properly blocked from creating services."
-+
-+  - task: "Technician Profile Management"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "medium"
-+    needs_retesting: false
-+    status_history:
-+      - working: true
-+        agent: "testing"
-+        comment: "Technician profile creation working correctly. Profile includes vehicle number, skills, and rating system."
-+
-+  - task: "Promotions & Coupon System"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "medium"
-+    needs_retesting: false
-+    status_history:
-+      - working: true
-+        agent: "testing"
-+        comment: "Promotion CRUD operations working. Admin can create/list promotions. Coupon validation endpoint working. Multiple coupon types supported (PERCENT, FIXED_AMOUNT)."
-+
-+  - task: "Service Request Creation & Management"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 1
-+    priority: "high"
-+    needs_retesting: false
-+    status_history:
-+      - working: true
-+        agent: "testing"
-+        comment: "Service request creation working with and without coupons. Discount calculation working correctly when minimum spend requirements are met. Customer can view own requests, dispatcher can view all requests. Fixed backend issue with PartUsed object serialization."
-+
-+  - task: "Technician Assignment by Dispatcher"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 1
-+    priority: "high"
-+    needs_retesting: false
-+    status_history:
-+      - working: true
-+        agent: "testing"
-+        comment: "Dispatcher can view available technicians and assign them to service requests. Job creation working correctly. Fixed API parameter issue (technician_id as query parameter)."
-+
-+  - task: "Technician Job Workflow"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 1
-+    priority: "high"
-+    needs_retesting: false
-+    status_history:
-+      - working: true
-+        agent: "testing"
-+        comment: "Complete technician workflow working: view jobs, accept job (status -> EN_ROUTE), upload BEFORE photos (status -> ON_SITE), complete job with parts and labor (status -> COMPLETION_PENDING). Fixed backend serialization issue for PartUsed objects."
-+
-+  - task: "Customer Job Closeout & Rating"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 1
-+    priority: "high"
-+    needs_retesting: false
-+    status_history:
-+      - working: true
-+        agent: "testing"
-+        comment: "Customer can close jobs and provide ratings/reviews. Technician rating average and count properly updated. Job status changes to CLOSED. Fixed API parameter issue (rating as query parameter)."
-+
-+  - task: "Analytics Dashboard"
-+    implemented: true
-+    working: true
-+    file: "/app/backend/server.py"
-+    stuck_count: 0
-+    priority: "medium"
-+    needs_retesting: false
-+    status_history:
-+      - working: true
-+        agent: "testing"
-+        comment: "Analytics summary endpoint working for admin users. Returns total_requests, completed_jobs, active_technicians, and total_revenue metrics."
-+
-+frontend:
-+  # No frontend testing performed as per instructions
-+
-+metadata:
-+  created_by: "testing_agent"
-+  version: "1.0"
-+  test_sequence: 1
-+  run_ui: false
-+
-+test_plan:
-+  current_focus: []
-+  stuck_tasks: []
-+  test_all: true
-+  test_priority: "high_first"
-+
-+agent_communication:
-+  - agent: "testing"
-+    message: "Comprehensive backend testing completed successfully. All 40 test cases passed covering authentication, RBAC, service catalog, technician workflows, promotions, and analytics. Fixed 3 backend issues during testing: 1) API parameter formats for technician assignment and job closeout, 2) PartUsed object serialization in job completion, 3) Coupon discount calculation with minimum spend requirements. All core backend functionality is working correctly."
-\ No newline at end of file
++/* Ensure minimum touch target size for mobile */
++button, a {
++  min-height: 44px;
++  min-width: 44px;
+ }
+ 
+-@media (prefers-color-scheme: light) {
+-  :root {
+-    color: #213547;
+-    background-color: #ffffff;
+-  }
+-  a:hover {
+-    color: #747bff;
+-  }
+-  button {
+-    background-color: #f9f9f9;
++@media (max-width: 768px) {
++  body {
++    font-size: 14px;
+   }
+ }
